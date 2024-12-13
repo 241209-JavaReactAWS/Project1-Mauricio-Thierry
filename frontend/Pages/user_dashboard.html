@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/frontend/CSS/styles.css">
+    <link rel="stylesheet" href="/frontend/CSS/user_dashboard.css">
+</head>
+
+<body>
+    <header>
+        <h1>Library System - User Dashboard</h1>
+    </header>
+
+    <div class="dashboard-container">
+        <h2 class="dashboard-header">Welcome, UserName</h2>
+
+        <h3>Borrowed Books</h3>
+
+        <table class="borrowed-books-list">
+            <thead>
+                <tr>
+                    <th>Book Title</th>
+                    <th>Author</th>
+                    <th>Borrowed Date</th>
+                    <th>Return Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A Book</td>
+                    <td>The Author1</td>
+                    <td>04/12/1998</td>
+                    <td>04/12/2029</td>
+                    <td style="text-align: center;"><button class="return-book">Return Now</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+
+        <h3>Available Books</h3>
+
+        <table class="avail-books-list">
+            <thead>
+                <tr>
+                    <th>Book Title</th>
+                    <th>Author</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Another Book</td>
+                    <td>The Author2</td>  
+                    <td><button class="borrow-a-book">Borrow Now</button></td>
+                </tr>
+            </tbody>
+
+        </table>
+
+
+    </div>
+   
+</body>
+</html>
