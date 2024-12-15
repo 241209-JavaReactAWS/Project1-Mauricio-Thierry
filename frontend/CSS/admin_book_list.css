@@ -1,0 +1,35 @@
+@import url('styles.css');
+
+.admin-header {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #05299E;
+}
+
+.admin-books-list {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin: 2rem auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.admin-books-list th, .admin-books-list td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.admin-books-list th {
+    background-color: #947BD3;
+    color: white;
+}
+
+.admin-books-list tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.admin-books-list tr:hover {
+    background-color: #f1f1f1;
+}
