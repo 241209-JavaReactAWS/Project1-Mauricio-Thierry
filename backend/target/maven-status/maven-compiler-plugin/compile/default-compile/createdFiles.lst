@@ -1,0 +1,4 @@
+com/MauricioThierry/library_backend/model/User.class
+com/MauricioThierry/library_backend/LibraryBackendApplication.class
+com/MauricioThierry/library_backend/model/Book.class
+com/MauricioThierry/library_backend/model/BorrowedBook.class
