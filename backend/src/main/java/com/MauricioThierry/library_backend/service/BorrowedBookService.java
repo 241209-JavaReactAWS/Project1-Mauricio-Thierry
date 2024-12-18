@@ -19,7 +19,7 @@ public class BorrowedBookService {
     }
 
     public List<BorrowedBook> getBorrowedBooksByUserId(Long userId){
-        return borrowedBookRepository.findByUserId(userId);
+        return borrowedBookRepository.findByUser_UserId(userId);
     }
 
     public BorrowedBook saveBorrowedBook(BorrowedBook borrowedBook){
