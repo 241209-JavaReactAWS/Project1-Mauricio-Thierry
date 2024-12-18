@@ -42,6 +42,7 @@ INSERT INTO books (title, author, available_copies) VALUES ('The Odyssey', 'Home
 INSERT INTO books (title, author, available_copies) VALUES ('Crime and Punishment', 'Fyodor Dostoevsky', 3);
 
 
+
 INSERT INTO borrowed_books (user_id, book_id) VALUES (2, 1);
 INSERT INTO borrowed_books (user_id, book_id) VALUES (3, 1);
 INSERT INTO borrowed_books (user_id, book_id) VALUES (4, 2);
