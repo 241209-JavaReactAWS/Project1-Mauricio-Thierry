@@ -1,4 +1,4 @@
-package com.MauricioThierry.library_backend.controller;
+package com.MauricioThierry.library_backend.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
