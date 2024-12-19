@@ -7,32 +7,30 @@ import jakarta.persistence.*;
 public class BorrowedBook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long borrowId;
+    private Long borrowId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
-    @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
-    private Book book;
+    @Column(name = "book_id", nullable = false)
+    private Long bookId;
 
-    public Book getBook() {
-        return book;
+    public Long getBook() {
+        return bookId;
     }
-    public long getBorrowId() {
+    public Long getBorrowId() {
         return borrowId;
     }
-    public User getUser() {
-        return user;
+    public Long getUser() {
+        return userId;
     }
 
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBook(Long bookId) {
+        this.bookId = bookId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Long userId) {
+        this.userId = userId;
     }
     
 }
