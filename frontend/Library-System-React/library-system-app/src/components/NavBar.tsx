@@ -12,10 +12,10 @@ const Navbar: React.FC = () => {
           try {
             const response = await axios.get("http://localhost:8080/api/users/check-auth", { withCredentials: true });
             if (response.data) {
-              setUser(response.data); // User is authenticated, set user state
+              setUser(response.data.role);
             }
           } catch (error) {
-            setUser(null); // User is not authenticated
+            setUser(null); 
           }
         };
         checkAuth();
@@ -38,7 +38,15 @@ const Navbar: React.FC = () => {
     <nav className="navbar">
       <div className="links">
           <li><Link to="/">Home</Link></li>
-          {user != null && <li><Link to="/dashboard">Dashboard</Link></li>}
+          {user == "ROLE_USER" ? ( <li><Link to="/dashboard">Dashboard</Link></li>
+          ): (
+            <br/>
+          )}
+
+          {user == "ROLE_ADMIN" ? ( <li><Link to="/admin">Manage Library</Link></li>
+          ): (
+            <br/>
+          )}
 
           {user != null ? (
             <li><button className="logout-btn" onClick={handleLogout}>Logout</button></li>
