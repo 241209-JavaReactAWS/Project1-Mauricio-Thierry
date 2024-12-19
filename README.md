@@ -15,11 +15,11 @@ The Library System allows users to manage library operations such as borrowing b
 - **Person Responsible**: Mauricio
 
 ### Admin Dashboard
-- **Description**: Displays a list of all users and their respective borrowed books. Includes functionality to add new books, remove borrowed books, and manage the library system.
+- **Description**: Displays a list of all users and their respective borrowed books. Includes functionality to add new books, remove borrowed books.
 - **Person Responsible**: Thierry
 
 ### Book List Page
-- **Description**: Lists all available books in the library, with options to borrow or return books depending on user roles.
+- **Description**: THIS PAGE IS NOW PART OF USER DASHBOARD
 - **Person Responsible**: Mauricio
 
 ## Backend
@@ -75,4 +75,4 @@ The backend of the Library System will utilize a PostgreSQL (H2***) database to 
 ## Technologies Used
 - **Backend**: Java, Spring Boot, Spring Data JPA
 - **Database**: H2
-- **Frontend**: HTML, CSS, JavaScript
+- **Frontend**: HTML, CSS, React + Typescript
