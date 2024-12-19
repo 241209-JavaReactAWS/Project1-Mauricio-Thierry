@@ -22,6 +22,10 @@ public class BorrowedBookService {
         return borrowedBookRepository.findByUserId(userId);
     }
 
+    public List<BorrowedBook> getBorrowedBooksByBookId(Long bookId){
+        return borrowedBookRepository.findByBookId(bookId);
+    }
+
     public BorrowedBook saveBorrowedBook(BorrowedBook borrowedBook){
         return borrowedBookRepository.save(borrowedBook);
     }

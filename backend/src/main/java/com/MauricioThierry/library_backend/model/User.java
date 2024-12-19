@@ -15,13 +15,13 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public String getPassword() {
         return password;
     }
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
     public Long getUserId() {
@@ -34,7 +34,7 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
     public void setUsername(String username) {

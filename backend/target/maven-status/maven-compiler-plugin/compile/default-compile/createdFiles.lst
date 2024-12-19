@@ -1,4 +1,14 @@
+com/MauricioThierry/library_backend/repository/BorrowedBookRepository.class
+com/MauricioThierry/library_backend/controller/BookController.class
 com/MauricioThierry/library_backend/model/User.class
 com/MauricioThierry/library_backend/LibraryBackendApplication.class
 com/MauricioThierry/library_backend/model/Book.class
+com/MauricioThierry/library_backend/service/BookService.class
 com/MauricioThierry/library_backend/model/BorrowedBook.class
+com/MauricioThierry/library_backend/service/UserService.class
+com/MauricioThierry/library_backend/repository/UserRepository.class
+com/MauricioThierry/library_backend/config/SecurityConfig.class
+com/MauricioThierry/library_backend/repository/BookRepository.class
+com/MauricioThierry/library_backend/service/BorrowedBookService.class
+com/MauricioThierry/library_backend/controller/BorrowedBookController.class
+com/MauricioThierry/library_backend/controller/UserController.class

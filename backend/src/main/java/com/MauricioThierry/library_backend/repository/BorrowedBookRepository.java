@@ -9,5 +9,7 @@ import com.MauricioThierry.library_backend.model.BorrowedBook;
 public interface BorrowedBookRepository extends JpaRepository<BorrowedBook, Long> {
 
     List<BorrowedBook> findByUserId(Long userId);
+
+    List<BorrowedBook> findByBookId(Long bookId);
     
 }
