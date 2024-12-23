@@ -12,12 +12,14 @@ interface Book {
 
 interface BorrowedBook {
   borrowId: number;
-  book: Book;
-  userId: number;
+  bookDetail: Book;
+  book: number;
+  user: number;
 }
 
 const UserDashboard: React.FC = () => {
-  const [user, setUser] = useState<any | null>(null);
+  const [user, setUser] = useState<any | null>(null); 
+  const [userId, setUserId] = useState<any | null>(null); 
   const [books, setBooks] = useState<Book[]>([]);
   const [borrowedBooks, setBorrowedBooks] = useState<BorrowedBook[]>([]);
 
@@ -27,6 +29,7 @@ const UserDashboard: React.FC = () => {
         const response = await axios.get("http://localhost:8080/api/users/check-auth", { withCredentials: true });
         if (response.data) {
           setUser(response.data);
+          setUserId(response.data.userId);
         }
       } catch (error) {
         setUser(null);
@@ -36,60 +39,40 @@ const UserDashboard: React.FC = () => {
     checkAuth();
   }, []);
 
-  const userId = user?.userId;
+  const refreshList = async () => {
+    // Re-fetch available books
+    const allBooks = await getBooks();
 
-  useEffect(() => {
-    const fetchBooks = async () => {
-      const allBooks = await getBooks();
-      const borrowed = await getBorrowedBooks(user.userId);
-      setBooks(allBooks.filter((book: Book) => !borrowed.some((b: BorrowedBook) => b.book.bookId === book.bookId)));
-      setBorrowedBooks(borrowed);
-    };
-    fetchBooks();
-  }, [userId]);
+    // Re-fetch borrowed books and resolve full book details
+    const borrowed = await getBorrowedBooks(userId);
 
-  useEffect(() =>{
+    // Fetch full book details for borrowed books
+    const borrowedBooksWithDetails = await Promise.all(
+      borrowed.map(async (b: BorrowedBook) => {
+        const bookDetails = await getBookById(b.book); // Fetch book details using bookId
+        return { ...b, bookDetail: bookDetails }; // Add book details to borrowed book object
+      })
+    );
 
-    const refreshList = async() =>{
-
-      // Re-fetch available books
-      const allBooks = await getBooks();
-  
-      // Re-fetch borrowed books and resolve full book details
-      const borrowed = await getBorrowedBooks(userId);
-      const borrowedBooksWithDetails = await Promise.all(
-        borrowed.map(async (b: { book: number; }) => {
-          const bookDetails = await getBookById(b.book);
-          return { ...b, book: bookDetails };
-        })
-      );
-
-      setBooks(allBooks.filter((book: Book) => !borrowed.some((b: { bookId: number; }) => b.bookId === book.bookId)));
-      setBorrowedBooks(borrowedBooksWithDetails);
-
-    };
-    refreshList();
-  })
+    // Filter out books that are already borrowed
+    setBooks(
+      allBooks.filter(
+        (book: Book) =>
+          !borrowedBooksWithDetails.some(
+            (borrowedBook) => borrowedBook.bookDetail.bookId === book.bookId
+          )
+      )
+    );
+    setBorrowedBooks(borrowedBooksWithDetails); // Store the updated list of borrowed books
+  };
 
   const handleBorrow = async (bookId: number) => {
     try {
       // Borrow the book
       await borrowBook({ userId, bookId });
   
-      // Re-fetch available books
-      const allBooks = await getBooks();
-  
-      // Re-fetch borrowed books and resolve full book details
-      const borrowed = await getBorrowedBooks(userId);
-      const borrowedBooksWithDetails = await Promise.all(
-        borrowed.map(async (b: { book: number; }) => {
-          const bookDetails = await getBookById(b.book);
-          return { ...b, book: bookDetails };
-        })
-      );
-  
-      setBooks(allBooks.filter((book: Book) => !borrowed.some((b: { bookId: number; }) => b.bookId === book.bookId)));
-      setBorrowedBooks(borrowedBooksWithDetails);
+      refreshList();
+
     } catch (error) {
       console.error("Failed to borrow book:", error);
     }
@@ -97,23 +80,11 @@ const UserDashboard: React.FC = () => {
   
   const handleReturn = async (borrowId: number) => {
     try {
-      // Call the API to return the book
+      //return the book
       await returnBook(borrowId);
   
-      // Re-fetch available books
-      const allBooks = await getBooks();
-  
-      // Re-fetch borrowed books and resolve full book details
-      const borrowed = await getBorrowedBooks(userId);
-      const borrowedBooksWithDetails = await Promise.all(
-        borrowed.map(async (b: { book: number; }) => {
-          const bookDetails = await getBookById(b.book);
-          return { ...b, book: bookDetails }; 
-        })
-      );
+      refreshList();
 
-      setBooks(allBooks.filter((book: Book) => !borrowed.some((b: { book: number; }) => b.book === book.bookId)));
-      setBorrowedBooks(borrowedBooksWithDetails);
     } catch (error) {
       console.error("Failed to return book:", error);
     }
@@ -122,10 +93,18 @@ const UserDashboard: React.FC = () => {
   
   return (
     <div>
-      <h1>User Dashboard</h1>
-        
-      <h2>Available Books</h2>
-        <table>
+      {user != null ? ( <h1>{user.username}'s Dashboard</h1>
+          ): (
+            <h1>Main Dashboard</h1>
+          )}
+
+      {books.length == 0 && borrowedBooks.length == 0 ? ( <button onClick={()=>refreshList()}>Load Dashboard</button>
+          ): (
+            <br/>
+          )}
+      
+      {books.length > 0 && (
+      <><h2>Available Books</h2><table>
           <thead>
             <tr>
               <th>Book Name</th>
@@ -144,7 +123,8 @@ const UserDashboard: React.FC = () => {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table></>
+      )}
   
       {borrowedBooks.length > 0 && ( // Only render this section if there are borrowed books
         <>
@@ -158,18 +138,20 @@ const UserDashboard: React.FC = () => {
                 <th>Action</th>
               </tr>
             </thead>
+
             <tbody>
               {borrowedBooks.map((borrowedBook) => (
                 <tr key={borrowedBook.borrowId}>
                   <td>{borrowedBook.borrowId}</td>
-                  <td>{borrowedBook.book.title}</td>
-                  <td>{borrowedBook.book.author}</td>
+                  <td>{borrowedBook.bookDetail.title}</td>
+                  <td>{borrowedBook.bookDetail.author}</td>
                   <td>
                     <button onClick={() => handleReturn(borrowedBook.borrowId)}>Return</button>
                   </td>
                 </tr>
               ))}
             </tbody>
+
           </table>
         </>
       )}

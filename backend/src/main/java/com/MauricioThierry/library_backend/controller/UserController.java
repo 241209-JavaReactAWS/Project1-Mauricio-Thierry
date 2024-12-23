@@ -1,5 +1,6 @@
 package com.MauricioThierry.library_backend.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.catalina.connector.Response;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 
+
 @RestController
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true") 
 @RequestMapping("/api/users")
@@ -30,6 +32,13 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> allUsers = userService.getAllUser();
+        return ResponseEntity.ok(allUsers);
+    }
+    
 
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {

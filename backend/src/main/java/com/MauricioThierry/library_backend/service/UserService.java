@@ -1,5 +1,6 @@
 package com.MauricioThierry.library_backend.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class UserService {
     public User login(String username, String password){
         return userRepository.findByUsernameAndPassword(username, password)
             .orElse(null);
+    }
+    public List<User> getAllUser(){
+        return userRepository.findAll();
     }
     
 }
