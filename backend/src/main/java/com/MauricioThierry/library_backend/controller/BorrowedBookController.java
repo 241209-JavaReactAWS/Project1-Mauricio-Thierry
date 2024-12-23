@@ -38,7 +38,7 @@ public class BorrowedBookController {
        return ResponseEntity.ok(borrowedBooks); 
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<BorrowedBook>> getAllBorrowedBooks(){
         List<BorrowedBook> borrowedBooks = borrowedBookService.getAllBorrowedBooks();
         return ResponseEntity.ok(borrowedBooks);
